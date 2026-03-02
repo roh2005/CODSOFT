@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile App Signup Flow | CodSoft Task 1</title>
+    <title>Interactive Mobile App Signup Flow | CodSoft Task 1</title>
 
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,14 +22,16 @@
                     },
                     colors: {
                         brand: {
-                            purple: '#6E76F6',    // Main button color
-                            textDark: '#2C3457',  // Main heading color
-                            textLight: '#4A5568', // Subtitle text color
-                            bgLight: '#E8EDF5',   // Canvas background color
+                            purple: '#6E76F6',
+                            textDark: '#2C3457',
+                            textLight: '#4A5568',
+                            bgLight: '#E8EDF5',
+                            error: '#EF4444',
+                            success: '#10B981'
                         }
                     },
                     boxShadow: {
-                        'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'soft': '0 20px 50px -10px rgba(0,0,0,0.15)',
                         'icon': '0 8px 16px -4px rgba(110, 118, 246, 0.15)',
                     }
                 }
@@ -42,8 +44,11 @@
 
     <style type="text/tailwindcss">
         @layer components {
-            .mobile-screen {
-                @apply bg-white w-full max-w-[340px] h-[720px] rounded-[40px] shadow-soft p-8 relative flex flex-col mx-auto;
+            .mobile-frame {
+                @apply bg-white w-full max-w-[360px] h-[760px] rounded-[48px] shadow-soft relative overflow-hidden border-[8px] border-slate-800 mx-auto;
+            }
+            .view {
+                @apply absolute inset-0 w-full h-full p-8 flex flex-col transition-transform duration-500 ease-in-out bg-white overflow-y-auto;
             }
             .heading {
                 @apply text-[28px] font-bold text-brand-purple mb-4;
@@ -52,7 +57,7 @@
                 @apply text-[13px] text-brand-textLight mb-8 leading-snug pr-4;
             }
             .btn-primary {
-                @apply w-full bg-brand-purple text-white py-[14px] rounded-xl font-semibold text-[15px] hover:bg-indigo-600 transition-colors shadow-lg shadow-brand-purple/30;
+                @apply w-full bg-brand-purple text-white py-[14px] rounded-xl font-semibold text-[15px] hover:bg-indigo-600 transition-colors shadow-lg shadow-brand-purple/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2;
             }
             .social-btn {
                 @apply w-12 h-12 rounded-full bg-white shadow-icon flex items-center justify-center text-brand-purple hover:-translate-y-1 transition-transform border border-slate-50;
@@ -61,154 +66,379 @@
                 @apply relative mb-5;
             }
             .input-field {
-                @apply w-full bg-[#f8f9ff] text-[14px] text-brand-textDark py-4 px-5 rounded-xl outline-none focus:ring-2 focus:ring-brand-purple/20 transition-all font-medium placeholder-brand-textDark;
+                @apply w-full bg-[#f8f9ff] text-[14px] text-brand-textDark py-4 px-5 rounded-xl border border-transparent outline-none focus:ring-2 focus:ring-brand-purple/20 transition-all font-medium placeholder-brand-textDark;
+            }
+            .input-field.error {
+                @apply border-brand-error focus:ring-brand-error/20 bg-red-50;
             }
             .link-text {
-                @apply text-brand-purple font-semibold hover:underline;
+                @apply text-brand-purple font-semibold hover:underline cursor-pointer;
             }
-            .divider {
-                @apply flex items-center justify-center text-[12px] font-bold text-brand-textDark my-6;
+            .error-message {
+                @apply text-brand-error text-xs mt-1 absolute -bottom-4 left-2 hidden;
+            }
+            .error-message.show {
+                @apply block;
             }
         }
         
         body { background-color: #E8EDF5; }
+        
+        /* Hide scrollbar for views */
+        .view::-webkit-scrollbar { display: none; }
+        .view { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 
-<body class="min-h-screen py-16 px-4 flex items-center justify-center">
+<body class="min-h-screen py-10 px-4 flex flex-col items-center justify-center">
 
-    <div class="container mx-auto max-w-6xl">
-        <h1 class="text-3xl font-bold text-center text-brand-textDark mb-12">Task 1: Mobile App Signup Flow</h1>
-
-        <!-- Screens Container -->
-        <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 justify-center items-center lg:items-start">
-
-            <!-- Screen 1: Welcome -->
-            <div class="mobile-screen">
-                <div class="mt-4">
-                    <h2 class="heading">Welcome</h2>
-                    <p class="sub-heading">Please login or sign up to continue using our app.</p>
-                </div>
-
-                <!-- Illustration Placeholder -->
-                <div class="flex-grow flex items-center justify-center my-4">
-                    <img src="https://raw.githubusercontent.com/roh2005/CODSOFT/refs/heads/main/Task1-Mobile-Signup-Flow/illustration.png"
-                        alt="Welcome Illustration" class="w-full h-auto object-contain"
-                        onerror="this.src='https://illustrations.popsy.co/amber/freelancer.svg'">
-                </div>
-
-                <div class="mt-auto">
-                    <p class="text-[13px] font-semibold text-brand-purple text-center mb-6">Enter via Social Networks
-                    </p>
-
-                    <div class="flex justify-center gap-6 mb-8">
-                        <button class="social-btn"><i class="fa-brands fa-facebook-f text-lg"></i></button>
-                        <button class="social-btn"><i class="fa-brands fa-twitter text-lg text-sky-400"></i></button>
-                    </div>
-
-                    <p class="text-[13px] font-bold text-brand-textDark text-center mb-8">or login with<br>email</p>
-
-                    <button class="btn-primary mb-6">Sign up</button>
-
-                    <p class="text-center text-[13px] font-bold text-brand-textDark mb-2">You already have an account?
-                        <a href="#" class="link-text">Login</a></p>
-                </div>
-            </div>
-
-            <!-- Screen 2: Sign Up -->
-            <div class="mobile-screen">
-                <div class="mt-4">
-                    <h2 class="heading">Sign Up</h2>
-                    <p class="sub-heading">Please Registration with email and sign up<br>to continue using our app.</p>
-                </div>
-
-                <div class="mt-6">
-                    <p class="text-[13px] font-semibold text-brand-purple text-center mb-6">Enter via Social Networks
-                    </p>
-
-                    <div class="flex justify-center gap-6 mb-8">
-                        <button class="social-btn"><i class="fa-brands fa-facebook-f text-lg"></i></button>
-                        <button class="social-btn"><i class="fa-brands fa-twitter text-lg text-sky-400"></i></button>
-                    </div>
-
-                    <p class="text-[13px] font-bold text-brand-textDark text-center mb-8">or login with<br>email</p>
-
-                    <form class="flex-grow flex flex-col justify-end h-full">
-                        <div class="input-group">
-                            <input type="email" class="input-field" placeholder="jhon.doe@gmail.com"
-                                value="jhon.doe@gmail.com">
-                        </div>
-
-                        <div class="input-group">
-                            <input type="password" class="input-field pr-12" placeholder="••••••••" value="password">
-                            <button type="button"
-                                class="absolute right-4 top-1/2 -translate-y-1/2 text-brand-purple hover:text-indigo-800">
-                                <i class="fa-solid fa-eye text-sm"></i>
-                            </button>
-                        </div>
-
-                        <div class="flex items-center gap-2 mb-10">
-                            <div
-                                class="w-4 h-4 rounded-full bg-brand-purple flex items-center justify-center cursor-pointer">
-                                <i class="fa-solid fa-check text-white text-[10px]"></i>
-                            </div>
-                            <span class="text-[12px] font-bold text-brand-textDark">I agree with privacy policy</span>
-                        </div>
-
-                        <button class="btn-primary mb-6">Sign up</button>
-                        <p class="text-center text-[13px] font-bold text-brand-textDark mb-2">You already have an
-                            account? <a href="#" class="link-text">Login</a></p>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Screen 3: Login -->
-            <div class="mobile-screen">
-                <div class="mt-4">
-                    <h2 class="heading">Login Now</h2>
-                    <p class="sub-heading">Please login to continue using our app.</p>
-                </div>
-
-                <div class="mt-6">
-                    <p class="text-[13px] font-semibold text-brand-purple text-center mb-6">Enter via Social Networks
-                    </p>
-
-                    <div class="flex justify-center gap-6 mb-8">
-                        <button class="social-btn"><i class="fa-brands fa-facebook-f text-lg"></i></button>
-                        <button class="social-btn"><i class="fa-brands fa-twitter text-lg text-sky-400"></i></button>
-                    </div>
-
-                    <p class="text-[13px] font-bold text-brand-textDark text-center mb-8">or login with<br>email</p>
-
-                    <form class="flex-grow flex flex-col justify-end h-full mt-2">
-                        <div class="input-group">
-                            <input type="email" class="input-field" placeholder="jhon.doe@gmail.com"
-                                value="jhon.doe@gmail.com">
-                        </div>
-
-                        <div class="input-group mb-4">
-                            <input type="password" class="input-field pr-12" placeholder="••••••••" value="password">
-                            <button type="button"
-                                class="absolute right-4 top-1/2 -translate-y-1/2 text-brand-purple hover:text-indigo-800">
-                                <i class="fa-solid fa-eye text-sm"></i>
-                            </button>
-                        </div>
-
-                        <div class="flex justify-end mb-10">
-                            <a href="#" class="text-[12px] font-bold text-brand-textDark hover:underline">Forgot
-                                Password?</a>
-                        </div>
-
-                        <button class="btn-primary mb-6">Login</button>
-                        <p class="text-center text-[13px] font-bold text-brand-textDark mb-2">Don't have an account? <a
-                                href="#" class="link-text">Sign up</a></p>
-                    </form>
-                </div>
-            </div>
-
-        </div>
+    <div class="mb-8 text-center">
+        <h1 class="text-3xl font-bold text-brand-textDark mb-2">Interactive Signup Flow</h1>
+        <p class="text-brand-textLight max-w-lg mx-auto">A functional prototype demonstrating user personal data
+            collection securely, with error-free validation.</p>
     </div>
 
+    <!-- Mobile Device Frame -->
+    <div class="mobile-frame">
+
+        <!-- ======================= -->
+        <!-- VIEW 1: WELCOME SCREEN  -->
+        <!-- ======================= -->
+        <div id="view-welcome" class="view translate-x-0 z-10">
+            <div class="mt-8 relative z-20">
+                <h2 class="heading">Welcome</h2>
+                <p class="sub-heading">Please login or sign up to continue using our app.</p>
+            </div>
+
+            <div class="flex-grow flex items-center justify-center -mt-8 relative z-10 pointer-events-none">
+                <img src="https://illustrations.popsy.co/amber/freelancer.svg" alt="Welcome Illustration"
+                    class="w-full h-auto object-contain scale-110">
+            </div>
+
+            <div class="mt-auto relative z-20 bg-white pt-4">
+                <p class="text-[13px] font-semibold text-brand-purple text-center mb-6">Enter via Social Networks</p>
+
+                <div class="flex justify-center gap-6 mb-8">
+                    <button class="social-btn" onclick="alert('Social login simulation')"><i
+                            class="fa-brands fa-facebook-f text-lg"></i></button>
+                    <button class="social-btn" onclick="alert('Social login simulation')"><i
+                            class="fa-brands fa-twitter text-lg text-sky-400"></i></button>
+                </div>
+
+                <p class="text-[13px] font-bold text-brand-textDark text-center mb-8">or login with<br>email</p>
+
+                <button class="btn-primary mb-6" onclick="navigateTo('signup')">Sign up</button>
+
+                <p class="text-center text-[13px] font-bold text-brand-textDark mb-4">You already have an account? <span
+                        class="link-text" onclick="navigateTo('login')">Login</span></p>
+            </div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- VIEW 2: SIGN UP SCREEN  -->
+        <!-- ======================= -->
+        <div id="view-signup" class="view translate-x-full z-20">
+            <button class="absolute top-8 left-8 text-brand-textDark hover:text-brand-purple transition-colors"
+                onclick="navigateTo('welcome')">
+                <i class="fa-solid fa-arrow-left text-xl"></i>
+            </button>
+            <div class="mt-12">
+                <h2 class="heading">Sign Up</h2>
+                <p class="sub-heading mb-4">Please register with email and sign up<br>to continue using our app.</p>
+            </div>
+
+            <div class="mt-4 flex flex-col h-full">
+                <!-- Personalization Requirement -->
+                <form id="signup-form" class="flex-grow flex flex-col mt-2">
+                    <div class="input-group">
+                        <input type="text" id="signup-name" class="input-field" placeholder="Full Name"
+                            autocomplete="name">
+                        <span class="error-message" id="err-name">Please enter your name</span>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="email" id="signup-email" class="input-field" placeholder="Email Address"
+                            autocomplete="email">
+                        <span class="error-message" id="err-email">Please enter a valid email</span>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="signup-password" class="input-field pr-12"
+                            placeholder="Password (min 8 chars)">
+                        <button type="button"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-brand-purple hover:text-indigo-800"
+                            onclick="togglePassword('signup-password', this)">
+                            <i class="fa-solid fa-eye text-sm"></i>
+                        </button>
+                        <span class="error-message" id="err-password">Password must be at least 8 chars</span>
+                    </div>
+
+                    <label class="flex items-center gap-3 mb-8 cursor-pointer group mt-2">
+                        <div class="relative flex items-center justify-center w-5 h-5">
+                            <input type="checkbox" id="signup-terms" class="peer sr-only">
+                            <div
+                                class="w-5 h-5 bg-[#f8f9ff] border-2 border-brand-purple/30 rounded focus:ring-2 focus:ring-brand-purple/20 peer-checked:bg-brand-purple peer-checked:border-brand-purple transition-all">
+                            </div>
+                            <svg class="absolute w-3 h-3 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <span
+                            class="text-[12px] font-bold text-brand-textDark group-hover:text-brand-purple transition-colors">I
+                            agree with privacy policy</span>
+                    </label>
+                    <span class="error-message block relative -top-6" id="err-terms">You must agree to the policy</span>
+
+                    <div class="mt-auto pt-4">
+                        <button type="submit" id="btn-submit-signup" class="btn-primary mb-6">
+                            <span>Create Account</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </button>
+                        <p class="text-center text-[13px] font-bold text-brand-textDark mb-4">You already have an
+                            account? <span class="link-text" onclick="navigateTo('login')">Login</span></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- VIEW 3: LOGIN SCREEN    -->
+        <!-- ======================= -->
+        <div id="view-login" class="view translate-x-full z-20">
+            <button class="absolute top-8 left-8 text-brand-textDark hover:text-brand-purple transition-colors"
+                onclick="navigateTo('welcome')">
+                <i class="fa-solid fa-arrow-left text-xl"></i>
+            </button>
+            <div class="mt-12">
+                <h2 class="heading">Login Now</h2>
+                <p class="sub-heading">Please login to continue using our app.</p>
+            </div>
+
+            <div class="mt-6 flex flex-col h-full">
+                <p class="text-[13px] font-semibold text-brand-purple text-center mb-6">Enter via Social Networks</p>
+
+                <div class="flex justify-center gap-6 mb-8">
+                    <button class="social-btn" onclick="alert('Social login simulation')"><i
+                            class="fa-brands fa-facebook-f text-lg"></i></button>
+                    <button class="social-btn" onclick="alert('Social login simulation')"><i
+                            class="fa-brands fa-twitter text-lg text-sky-400"></i></button>
+                </div>
+
+                <p class="text-[13px] font-bold text-brand-textDark text-center mb-6">or login with<br>email</p>
+
+                <form id="login-form" class="flex-grow flex flex-col mt-2">
+                    <div class="input-group">
+                        <input type="email" id="login-email" class="input-field" placeholder="Email Address">
+                        <span class="error-message" id="err-login-email">Please enter your email</span>
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <input type="password" id="login-password" class="input-field pr-12" placeholder="Password">
+                        <button type="button"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-brand-purple hover:text-indigo-800"
+                            onclick="togglePassword('login-password', this)">
+                            <i class="fa-solid fa-eye text-sm"></i>
+                        </button>
+                        <span class="error-message" id="err-login-password">Please enter your password</span>
+                    </div>
+
+                    <div class="flex justify-end mb-10">
+                        <span class="text-[12px] font-bold text-brand-textDark hover:underline cursor-pointer"
+                            onclick="alert('Password reset link sent!')">Forgot Password?</span>
+                    </div>
+
+                    <div class="mt-auto pt-4">
+                        <button type="submit" id="btn-submit-login" class="btn-primary mb-6">
+                            <span>Login</span>
+                            <i class="fa-solid fa-arrow-right text-sm leading-none pt-0.5"></i>
+                        </button>
+                        <p class="text-center text-[13px] font-bold text-brand-textDark mb-4">Don't have an account?
+                            <span class="link-text" onclick="navigateTo('signup')">Sign up</span></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- OVERLAY: SUCCESS SCREEN -->
+        <!-- ======================= -->
+        <div id="view-success"
+            class="absolute inset-0 w-full h-full bg-brand-purple z-50 flex flex-col items-center justify-center p-8 text-white transition-transform duration-500 ease-in-out translate-y-full">
+            <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6 shadow-xl shadow-indigo-900/50 scale-0 transition-transform duration-500 delay-300"
+                id="success-icon">
+                <i class="fa-solid fa-check text-4xl text-brand-purple"></i>
+            </div>
+            <h2 class="text-3xl font-bold mb-2 text-center opacity-0 transition-opacity duration-500 delay-500"
+                id="success-title">Success!</h2>
+            <p class="text-center text-indigo-100 opacity-0 transition-opacity duration-500 delay-700"
+                id="success-message">You have successfully authenticated.</p>
+
+            <button class="absolute top-8 right-8 text-white hover:text-indigo-200 transition-colors"
+                onclick="resetToWelcome()">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Interactive Logic -->
+    <script>
+        // State variables
+        const views = {
+            'welcome': document.getElementById('view-welcome'),
+            'signup': document.getElementById('view-signup'),
+            'login': document.getElementById('view-login')
+        };
+
+        // Error handling utility
+        const showError = (inputId, errId, condition, className = 'error') => {
+            const input = document.getElementById(inputId);
+            const err = document.getElementById(errId);
+            if (condition) {
+                input.classList.add(className);
+                err.classList.add('show');
+                return false;
+            } else {
+                input.classList.remove(className);
+                err.classList.remove('show');
+                return true;
+            }
+        };
+
+        const validateEmail = (email) => {
+            return String(email).toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+        };
+
+        // Navigation (Sliding animations)
+        function navigateTo(targetView) {
+            // Reset transforms
+            Object.values(views).forEach(v => {
+                v.classList.remove('translate-x-0', '-translate-x-full', 'translate-x-full');
+            });
+
+            if (targetView === 'welcome') {
+                views['welcome'].classList.add('translate-x-0');
+                views['signup'].classList.add('translate-x-full');
+                views['login'].classList.add('translate-x-full');
+            } else if (targetView === 'signup') {
+                views['welcome'].classList.add('-translate-x-full');
+                views['signup'].classList.add('translate-x-0');
+                views['login'].classList.add('translate-x-full');
+            } else if (targetView === 'login') {
+                views['welcome'].classList.add('-translate-x-full');
+                views['signup'].classList.add('translate-x-full');
+                views['login'].classList.add('translate-x-0');
+            }
+        }
+
+        // Secure Toggle Password 
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Show Success Overlay
+        function showSuccess(title, message) {
+            const successView = document.getElementById('view-success');
+            document.getElementById('success-title').textContent = title;
+            document.getElementById('success-message').textContent = message;
+
+            successView.classList.remove('translate-y-full');
+            successView.classList.add('translate-y-0');
+
+            // Trigger animation classes
+            setTimeout(() => {
+                document.getElementById('success-icon').classList.remove('scale-0');
+                document.getElementById('success-title').classList.remove('opacity-0');
+                document.getElementById('success-message').classList.remove('opacity-0');
+            }, 50);
+        }
+
+        function resetToWelcome() {
+            const successView = document.getElementById('view-success');
+            document.getElementById('success-icon').classList.add('scale-0');
+            document.getElementById('success-title').classList.add('opacity-0');
+            document.getElementById('success-message').classList.add('opacity-0');
+
+            setTimeout(() => {
+                successView.classList.remove('translate-y-0');
+                successView.classList.add('translate-y-full');
+
+                // Clear forms
+                document.getElementById('signup-form').reset();
+                document.getElementById('login-form').reset();
+                navigateTo('welcome');
+            }, 500);
+        }
+
+        // Form Validations (Error-free requirement)
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const pass = document.getElementById('signup-password').value;
+            const terms = document.getElementById('signup-terms').checked;
+
+            let isValid = true;
+            isValid &= showError('signup-name', 'err-name', name.trim() === '');
+            isValid &= showError('signup-email', 'err-email', !validateEmail(email));
+            isValid &= showError('signup-password', 'err-password', pass.length < 8);
+
+            const errTerms = document.getElementById('err-terms');
+            if (!terms) {
+                errTerms.classList.add('show');
+                isValid &= false;
+            } else {
+                errTerms.classList.remove('show');
+            }
+
+            if (isValid) {
+                // Personalization Requirement simulation
+                const btn = document.getElementById('btn-submit-signup');
+                const origHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+                setTimeout(() => {
+                    btn.innerHTML = origHtml;
+                    showSuccess(`Welcome, ${name.split(' ')[0]}!`, "Your secure account has been personalized and created successfully.");
+                }, 1000);
+            }
+        });
+
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-password').value;
+
+            let isValid = true;
+            isValid &= showError('login-email', 'err-login-email', !validateEmail(email));
+            isValid &= showError('login-password', 'err-login-password', pass.trim() === '');
+
+            if (isValid) {
+                const btn = document.getElementById('btn-submit-login');
+                const origHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+                setTimeout(() => {
+                    btn.innerHTML = origHtml;
+                    showSuccess("Welcome Back!", "You have securely logged in to your account.");
+                }, 1000);
+            }
+        });
+    </script>
 </body>
 
 </html>

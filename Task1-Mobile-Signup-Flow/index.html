@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile App Signup Flow | CodSoft Task 1</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            purple: '#6E76F6',    // Main button color
+                            textDark: '#2C3457',  // Main heading color
+                            textLight: '#4A5568', // Subtitle text color
+                            bgLight: '#E8EDF5',   // Canvas background color
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'icon': '0 8px 16px -4px rgba(110, 118, 246, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style type="text/tailwindcss">
+        @layer components {
+            .mobile-screen {
+                @apply bg-white w-full max-w-[340px] h-[720px] rounded-[40px] shadow-soft p-8 relative flex flex-col mx-auto;
+            }
+            .heading {
+                @apply text-[28px] font-bold text-brand-purple mb-4;
+            }
+            .sub-heading {
+                @apply text-[13px] text-brand-textLight mb-8 leading-snug pr-4;
+            }
+            .btn-primary {
+                @apply w-full bg-brand-purple text-white py-[14px] rounded-xl font-semibold text-[15px] hover:bg-indigo-600 transition-colors shadow-lg shadow-brand-purple/30;
+            }
+            .social-btn {
+                @apply w-12 h-12 rounded-full bg-white shadow-icon flex items-center justify-center text-brand-purple hover:-translate-y-1 transition-transform border border-slate-50;
+            }
+            .input-group {
+                @apply relative mb-5;
+            }
+            .input-field {
+                @apply w-full bg-[#f8f9ff] text-[14px] text-brand-textDark py-4 px-5 rounded-xl outline-none focus:ring-2 focus:ring-brand-purple/20 transition-all font-medium placeholder-brand-textDark;
+            }
+            .link-text {
+                @apply text-brand-purple font-semibold hover:underline;
+            }
+            .divider {
+                @apply flex items-center justify-center text-[12px] font-bold text-brand-textDark my-6;
+            }
+        }
+        
+        body { background-color: #E8EDF5; }
+    </style>
+</head>
+
+<body class="min-h-screen py-16 px-4 flex items-center justify-center">
+
+    <div class="container mx-auto max-w-6xl">
+        <h1 class="text-3xl font-bold text-center text-brand-textDark mb-12">Task 1: Mobile App Signup Flow</h1>
+
+        <!-- Screens Container -->
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 justify-center items-center lg:items-start">
+
+            <!-- Screen 1: Welcome -->
+            <div class="mobile-screen">
+                <div class="mt-4">
+                    <h2 class="heading">Welcome</h2>
+                    <p class="sub-heading">Please login or sign up to continue using our app.</p>
+                </div>
+
+                <!-- Illustration Placeholder -->
+                <div class="flex-grow flex items-center justify-center my-4">
+                    <img src="https://raw.githubusercontent.com/roh2005/CODSOFT/refs/heads/main/Task1-Mobile-Signup-Flow/illustration.png"
+                        alt="Welcome Illustration" class="w-full h-auto object-contain"
+                        onerror="this.src='https://illustrations.popsy.co/amber/freelancer.svg'">
+                </div>
+
+                <div class="mt-auto">
+                    <p class="text-[13px] font-semibold text-brand-purple text-center mb-6">Enter via Social Networks
+                    </p>
+
+                    <div class="flex justify-center gap-6 mb-8">
+                        <button class="social-btn"><i class="fa-brands fa-facebook-f text-lg"></i></button>
+                        <button class="social-btn"><i class="fa-brands fa-twitter text-lg text-sky-400"></i></button>
+                    </div>
+
+                    <p class="text-[13px] font-bold text-brand-textDark text-center mb-8">or login with<br>email</p>
+
+                    <button class="btn-primary mb-6">Sign up</button>
+
+                    <p class="text-center text-[13px] font-bold text-brand-textDark mb-2">You already have an account?
+                        <a href="#" class="link-text">Login</a></p>
+                </div>
+            </div>
+
+            <!-- Screen 2: Sign Up -->
+            <div class="mobile-screen">
+                <div class="mt-4">
+                    <h2 class="heading">Sign Up</h2>
+                    <p class="sub-heading">Please Registration with email and sign up<br>to continue using our app.</p>
+                </div>
+
+                <div class="mt-6">
+                    <p class="text-[13px] font-semibold text-brand-purple text-center mb-6">Enter via Social Networks
+                    </p>
+
+                    <div class="flex justify-center gap-6 mb-8">
+                        <button class="social-btn"><i class="fa-brands fa-facebook-f text-lg"></i></button>
+                        <button class="social-btn"><i class="fa-brands fa-twitter text-lg text-sky-400"></i></button>
+                    </div>
+
+                    <p class="text-[13px] font-bold text-brand-textDark text-center mb-8">or login with<br>email</p>
+
+                    <form class="flex-grow flex flex-col justify-end h-full">
+                        <div class="input-group">
+                            <input type="email" class="input-field" placeholder="jhon.doe@gmail.com"
+                                value="jhon.doe@gmail.com">
+                        </div>
+
+                        <div class="input-group">
+                            <input type="password" class="input-field pr-12" placeholder="••••••••" value="password">
+                            <button type="button"
+                                class="absolute right-4 top-1/2 -translate-y-1/2 text-brand-purple hover:text-indigo-800">
+                                <i class="fa-solid fa-eye text-sm"></i>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-2 mb-10">
+                            <div
+                                class="w-4 h-4 rounded-full bg-brand-purple flex items-center justify-center cursor-pointer">
+                                <i class="fa-solid fa-check text-white text-[10px]"></i>
+                            </div>
+                            <span class="text-[12px] font-bold text-brand-textDark">I agree with privacy policy</span>
+                        </div>
+
+                        <button class="btn-primary mb-6">Sign up</button>
+                        <p class="text-center text-[13px] font-bold text-brand-textDark mb-2">You already have an
+                            account? <a href="#" class="link-text">Login</a></p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Screen 3: Login -->
+            <div class="mobile-screen">
+                <div class="mt-4">
+                    <h2 class="heading">Login Now</h2>
+                    <p class="sub-heading">Please login to continue using our app.</p>
+                </div>
+
+                <div class="mt-6">
+                    <p class="text-[13px] font-semibold text-brand-purple text-center mb-6">Enter via Social Networks
+                    </p>
+
+                    <div class="flex justify-center gap-6 mb-8">
+                        <button class="social-btn"><i class="fa-brands fa-facebook-f text-lg"></i></button>
+                        <button class="social-btn"><i class="fa-brands fa-twitter text-lg text-sky-400"></i></button>
+                    </div>
+
+                    <p class="text-[13px] font-bold text-brand-textDark text-center mb-8">or login with<br>email</p>
+
+                    <form class="flex-grow flex flex-col justify-end h-full mt-2">
+                        <div class="input-group">
+                            <input type="email" class="input-field" placeholder="jhon.doe@gmail.com"
+                                value="jhon.doe@gmail.com">
+                        </div>
+
+                        <div class="input-group mb-4">
+                            <input type="password" class="input-field pr-12" placeholder="••••••••" value="password">
+                            <button type="button"
+                                class="absolute right-4 top-1/2 -translate-y-1/2 text-brand-purple hover:text-indigo-800">
+                                <i class="fa-solid fa-eye text-sm"></i>
+                            </button>
+                        </div>
+
+                        <div class="flex justify-end mb-10">
+                            <a href="#" class="text-[12px] font-bold text-brand-textDark hover:underline">Forgot
+                                Password?</a>
+                        </div>
+
+                        <button class="btn-primary mb-6">Login</button>
+                        <p class="text-center text-[13px] font-bold text-brand-textDark mb-2">Don't have an account? <a
+                                href="#" class="link-text">Sign up</a></p>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -297,7 +297,7 @@ body {
 
 #view-detail {
     background-color: var(--bg-white);
-    padding-bottom: 100px;
+    padding-bottom: 0;
 }
 
 .detail-hero {
@@ -341,7 +341,7 @@ body {
     background-color: var(--bg-white);
     border-top-left-radius: 32px;
     border-top-right-radius: 32px;
-    padding: 30px 24px;
+    padding: 30px 24px 30px;
     margin-top: -30px;
     /* Overlap image */
     position: relative;
@@ -417,8 +417,8 @@ body {
 
 /* Action Bar (Detail View) */
 .action-bar {
-    position: absolute;
-    bottom: 0px;
+    position: sticky;
+    bottom: 0;
     left: 0;
     width: 100%;
     background-color: var(--bg-white);
@@ -426,6 +426,8 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 16px;
+    box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.05);
+    z-index: 100;
 }
 
 .btn-fav {

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu App</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <div class="app-frame">
+
+        <!-- ============================== -->
+        <!-- VIEW 1: Main Menu -->
+        <!-- ============================== -->
+        <div id="view-menu" class="view active">
+            <!-- Header -->
+            <header class="app-header">
+                <h1>Menu</h1>
+                <button class="cart-btn" aria-label="Cart">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                </button>
+            </header>
+
+            <!-- Search -->
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search">
+            </div>
+
+            <!-- Content Area (Scrollable) -->
+            <main class="menu-content">
+                <!-- Categories (Horizontal Scroll) -->
+                <nav class="categories">
+                    <button class="cat-btn active" data-cat="all">All</button>
+                    <button class="cat-btn" data-cat="breakfast">Breakfast</button>
+                    <button class="cat-btn" data-cat="lunch">Lunch</button>
+                    <button class="cat-btn" data-cat="treats">Treats</button>
+                    <button class="cat-btn" data-cat="dessert">Dessert</button>
+                    <button class="cat-btn" data-cat="drinks">Drinks</button>
+                </nav>
+
+                <!-- Menu Item Grid -->
+                <div class="menu-grid" id="menu-list">
+                    <!-- Items will be injected here via JavaScript -->
+                </div>
+            </main>
+        </div>
+
+        <!-- ============================== -->
+        <!-- VIEW 2: Item Detail -->
+        <!-- ============================== -->
+        <div id="view-detail" class="view">
+            <!-- Hero Image Header -->
+            <div class="detail-hero">
+                <button class="back-btn" id="btn-back" aria-label="Go Back">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="cart-btn" aria-label="Cart">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                </button>
+                <img id="detail-img" src="" alt="Food Item">
+            </div>
+
+            <!-- Detail Content Container -->
+            <div class="detail-content">
+                <div class="detail-header">
+                    <div>
+                        <h2 id="detail-title">Item Title</h2>
+                        <div class="detail-price" id="detail-price">00.00$</div>
+                    </div>
+                    <div class="detail-meta">
+                        <span class="time"><i class="fa-regular fa-clock"></i> <span id="detail-time">--
+                                min</span></span>
+                        <span class="rating"><i class="fa-regular fa-star"></i> <span
+                                id="detail-rating">0.0</span></span>
+                    </div>
+                </div>
+
+                <p class="detail-desc" id="detail-desc">
+                    Description goes here.
+                </p>
+
+                <h3 class="section-title">Recently Viewed</h3>
+                <div class="recent-scroll">
+                    <img src="https://images.unsplash.com/photo-1495474472207-464a8d7ee566?auto=format&fit=crop&w=150&q=80"
+                        alt="Tea" class="recent-img">
+                    <img src="https://images.unsplash.com/photo-1550461716-dbf266b2a8a7?auto=format&fit=crop&w=150&q=80"
+                        alt="Salad" class="recent-img">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=150&q=80"
+                        alt="Bowl" class="recent-img">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=150&q=80"
+                        alt="Pizza" class="recent-img">
+                </div>
+            </div>
+
+            <!-- Bottom Action Bar (Fixed in Detail View) -->
+            <div class="action-bar">
+                <button class="btn-fav" id="btn-fav" aria-label="Favorite">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+                <button class="btn-primary">Add to cart</button>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- BOTTOM NAVIGATION (Main View Only) -->
+        <!-- ============================== -->
+        <nav class="bottom-nav" id="bottom-nav">
+            <a href="#" class="nav-item active">
+                <div class="nav-dot"></div>
+                <span>Menu</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-regular fa-heart"></i>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-list-ul"></i>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fa-regular fa-user"></i>
+            </a>
+        </nav>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="./script.js"></script>
+</body>
+
+</html>
